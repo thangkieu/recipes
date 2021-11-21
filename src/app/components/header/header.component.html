@@ -1,0 +1,46 @@
+<header class="border-bottom">
+  <nav class="navbar navbar-default navbar-expand-md navbar-light">
+    <div class="container">
+      <div class="navbar-header">
+        <a routerLink="/" class="navbar-brand" #headerEl>Recipes Book</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-sm-auto">
+          <li class="navbar-item">
+            <a routerLink="/recipes" class="nav-link">Recipes</a>
+          </li>
+          <li class="navbar-item">
+            <a routerLink="/shopping-list" class="nav-link">Shopping List</a>
+          </li>
+        </ul>
+        <div *ngIf="isLoggedIn; else showLogin" class="dropdown text-end">
+          <a
+            href="#"
+            class="d-block link-dark text-decoration-none dropdown-toggle"
+            id="dropdownUser1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="https://github.com/mdo.png"
+              alt="mdo"
+              width="32"
+              height="32"
+              class="rounded-circle"
+            />
+          </a>
+          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+            <li>
+              <a class="dropdown-item" (click)="logout($event)" href="#"
+                >Sign out</a
+              >
+            </li>
+          </ul>
+        </div>
+        <ng-template #showLogin>
+          <a routerLink="/login" class="btn btn-primary btn-sm">Login</a>
+        </ng-template>
+      </div>
+    </div>
+  </nav>
+</header>

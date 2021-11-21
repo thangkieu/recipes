@@ -1,0 +1,17 @@
+.dropdown-menu {
+  right: 0;
+  margin: 0;
+}
+.dropdown-menu:hover {
+  display: block;
+}
+.dropdown-toggle:hover + .dropdown-menu {
+  display: block;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}

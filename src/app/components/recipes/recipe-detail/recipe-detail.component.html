@@ -1,0 +1,37 @@
+<div *ngIf="data; else noData" class="row">
+  <div class="col">
+    <img
+      *ngIf="data.photoUrl"
+      class="float-left"
+      src="{{ data.photoUrl }}"
+      alt="{{ data.name }}"
+    />
+    <h1 class="d-flex align-items-end">
+      <span class="me-auto">{{ data.name }}</span>
+      <a
+        class="btn btn-outline-danger btn-sm me-2 flex-shrink-0"
+        href="#"
+        (click)="remove($event)"
+        >Delete Recepie</a
+      >
+      <a class="btn btn-outline-secondary btn-sm flex-shrink-0" href="#"
+        >Edit Recipe</a
+      >
+    </h1>
+
+    <hr />
+    <h4>Description</h4>
+    <div class="pre-text">{{ data.description }}</div>
+    <hr />
+    <h4>Ingredients</h4>
+    <div class="pre-text mb-3">{{ data.ingredients }}</div>
+    <a class="btn btn-primary btn-sm" href="#">Add to Shopping List</a>
+    <hr />
+    <h4>Directions</h4>
+    <div class="pre-text">{{ data.directions }}</div>
+  </div>
+</div>
+
+<ng-template #noData>
+  Select data on the left side to view details.
+</ng-template>

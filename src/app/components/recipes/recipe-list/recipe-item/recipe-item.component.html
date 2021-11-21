@@ -1,0 +1,32 @@
+<!-- <a
+  href="#"
+  class="list-group-item d-flex align-items-center justify-content-between"
+  (click)="onClick($event)"
+>
+  <div>
+    <h5>{{ data.name }}</h5>
+    <p class="m-0">{{ data.description }}</p>
+  </div>
+  <div *ngIf="data.photoUrl">
+    <img
+      src="{{ data.photoUrl }}"
+      alt="{{ data.name }}"
+      height="50px"
+      class="img-responsive"
+    />
+  </div>
+</a> -->
+
+<div class="card">
+  <img
+    *ngIf="data.photoUrl"
+    src="{{ data.photoUrl }}"
+    class="card-img-top"
+    alt="{{ data.name }}"
+  />
+  <div class="card-body">
+    <h5 class="card-title">{{ data.name }}</h5>
+    <p class="card-text text-truncate">{{ data.description }}</p>
+    <a routerLink="/recipes/{{ data.id }}">View details</a>
+  </div>
+</div>

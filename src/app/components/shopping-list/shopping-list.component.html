@@ -1,0 +1,11 @@
+<div class="container">
+  <app-shopping-edit></app-shopping-edit>
+
+  <hr />
+
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let ing of ingredients">
+      <a href="#">{{ ing.name }} ({{ ing.amount }})</a>
+    </li>
+  </ul>
+</div>
