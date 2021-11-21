@@ -1,61 +1,101 @@
 <div class="container mt-3">
   <h2 class="mb-3">Add new Recipe</h2>
-  <form (ngSubmit)="submit(f)" #f="ngForm">
+  <form (ngSubmit)="submit()" [formGroup]="form">
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
       <input
         type="text"
-        class="form-control"
+        class="form-control form-control-sm"
         id="name"
-        ngModel=""
         name="name"
+        formControlName="name"
       />
+      <div class="invalid-feedback">This field is mandatory</div>
     </div>
     <div class="mb-3">
       <label for="photoUrl" class="form-label">Photo Url</label>
       <input
         type="url"
-        class="form-control"
+        class="form-control form-control-sm"
         id="photoUrl"
-        ngModel=""
+        formControlName="photoUrl"
         name="photoUrl"
       />
+      <div class="invalid-feedback">This field is mandatory</div>
     </div>
 
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
       <textarea
-        class="form-control"
+        class="form-control form-control-sm"
         id="description"
-        ngModel=""
+        formControlName="description"
         name="description"
         rows="2"
       ></textarea>
+      <div class="invalid-feedback">This field is mandatory</div>
     </div>
 
     <div class="mb-3">
       <label for="directions" class="form-label">Directions</label>
       <textarea
-        class="form-control"
+        class="form-control form-control-sm"
         id="directions"
-        ngModel=""
+        formControlName="directions"
         name="directions"
         rows="5"
       ></textarea>
+      <div class="invalid-feedback">This field is mandatory</div>
     </div>
 
     <div class="mb-3">
       <label for="ingredients" class="form-label">Ingredients</label>
-      <textarea
-        class="form-control"
-        id="ingredients"
-        ngModel=""
-        name="ingredients"
-        rows="5"
-      ></textarea>
+      <div formArrayName="ingredients">
+        <ng-container
+          *ngFor="let ingredientForm of ingredients.controls; let i = index"
+        >
+          <div class="d-flex gap-2 mb-2" [formGroupName]="i">
+            <div>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                formControlName="name"
+                name="ingredientname"
+                placeholder="Name"
+                (keydown)="onIngredientKeydown($event)"
+              />
+              <div class="invalid-feedback">This field is mandatory</div>
+            </div>
+            <div>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                formControlName="amount"
+                name="ingredientamount"
+                placeholder="Amount"
+                (keydown)="onIngredientKeydown($event)"
+              />
+              <div class="invalid-feedback">This field is mandatory</div>
+            </div>
+          </div>
+        </ng-container>
+        <button
+          (click)="addIngredient()"
+          type="button"
+          class="btn btn-default btn-sm"
+        >
+          + Add another Ingredient
+        </button>
+      </div>
     </div>
     <div class="mb-3 text-end">
-      <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+      <button
+        type="submit"
+        [disabled]="!form.valid"
+        class="btn btn-primary btn-sm"
+      >
+        Submit
+      </button>
     </div>
   </form>
 </div>

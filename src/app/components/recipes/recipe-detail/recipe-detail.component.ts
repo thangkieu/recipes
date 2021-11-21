@@ -6,6 +6,7 @@ import {
 } from '@angular/router';
 import { map, Subscription } from 'rxjs';
 import { RecipeService } from 'src/app/services/recipe.service';
+import { ShoppingListService } from 'src/app/services/shopping-list.service';
 import { Recipe } from '../recipe.model';
 
 @Component({
@@ -20,7 +21,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private recipeService: RecipeService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private shoppingListService: ShoppingListService
   ) {
     this.recipeId = activeRoute.snapshot.paramMap.get('id') || '';
   }
@@ -41,5 +43,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.recipeService.removeRecipe(this.recipeId).then(() => {
       this.router.navigate(['/recipes']);
     });
+  }
+
+  addIngredients() {
+    this.shoppingListService.add(this.data.ingredients);
   }
 }

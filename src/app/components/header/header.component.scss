@@ -2,9 +2,16 @@
   right: 0;
   margin: 0;
 }
-.dropdown-menu:hover {
-  display: block;
+
+.dropdown-toggle {
+  svg,
+  &::after {
+    display: inline-block;
+    vertical-align: middle;
+  }
 }
+
+.dropdown-menu:hover,
 .dropdown-toggle:hover + .dropdown-menu {
   display: block;
 }
@@ -14,4 +21,14 @@ header {
   top: 0;
   background-color: white;
   z-index: 1;
+}
+
+.profile-icon {
+  font-size: 1.5rem;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
 }

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RecipeService } from 'src/app/services/recipe.service';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
@@ -18,7 +18,7 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
     RecipeListComponent,
     RecipeEditComponent,
   ],
-  imports: [CommonModule, FormsModule, RecipeRoutingModule],
+  imports: [CommonModule, ReactiveFormsModule, RecipeRoutingModule],
   providers: [RecipeService],
 })
 export class RecipeModule {}

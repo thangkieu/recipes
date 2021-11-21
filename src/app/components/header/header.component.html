@@ -1,18 +1,64 @@
 <header class="border-bottom">
-  <nav class="navbar navbar-default navbar-expand-md navbar-light">
-    <div class="container">
-      <div class="navbar-header">
-        <a routerLink="/" class="navbar-brand" #headerEl>Recipes Book</a>
+  <nav class="navbar">
+    <div class="container d-flex">
+      <div class="navbar-header me-sm-auto">
+        <a
+          routerLink="/"
+          class="navbar-brand d-inline-flex align-items-center gap-2"
+          #headerEl
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            class="bi bi-card-list"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"
+            />
+            <path
+              d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"
+            />
+          </svg>
+          Recipes Book
+        </a>
       </div>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav me-sm-auto">
-          <li class="navbar-item">
-            <a routerLink="/recipes" class="nav-link">Recipes</a>
-          </li>
-          <li class="navbar-item">
-            <a routerLink="/shopping-list" class="nav-link">Shopping List</a>
-          </li>
-        </ul>
+      <div class="d-inline-flex align-items-center gap-3">
+        <button
+          routerLink="/shopping-list"
+          class="p-0 btn btn-default position-relative"
+        >
+          <svg
+            style="font-size: 1.5rem"
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            class="bi bi-basket2-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M5.929 1.757a.5.5 0 1 0-.858-.514L2.217 6H.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h.623l1.844 6.456A.75.75 0 0 0 3.69 15h8.622a.75.75 0 0 0 .722-.544L14.877 8h.623a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1.717L10.93 1.243a.5.5 0 1 0-.858.514L12.617 6H3.383L5.93 1.757zM4 10a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm4-1a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1z"
+            />
+          </svg>
+          <span
+            *ngIf="shoppingListNo"
+            class="
+              position-absolute
+              top-0
+              start-100
+              translate-middle
+              badge
+              rounded-pill
+              bg-danger
+            "
+          >
+            {{ shoppingListNo }}
+            <span class="visually-hidden">Shopping list item</span>
+          </span>
+        </button>
         <div *ngIf="isLoggedIn; else showLogin" class="dropdown text-end">
           <a
             href="#"
@@ -21,13 +67,20 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img
-              src="https://github.com/mdo.png"
-              alt="mdo"
-              width="32"
-              height="32"
-              class="rounded-circle"
-            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              fill="currentColor"
+              class="bi bi-person-circle profile-icon"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path
+                fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+              />
+            </svg>
           </a>
           <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
             <li>

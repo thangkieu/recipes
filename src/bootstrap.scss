@@ -12,6 +12,14 @@
 @import "node_modules/bootstrap/scss/mixins";
 @import "node_modules/bootstrap/scss/utilities";
 
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 960px,
+  xxl: 1140px,
+);
+
 // Layout & components
 @import "node_modules/bootstrap/scss/root";
 @import "node_modules/bootstrap/scss/reboot";
