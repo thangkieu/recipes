@@ -13,7 +13,6 @@ export class RecipeEditComponent implements OnInit {
   ngOnInit(): void {}
 
   submit(form: NgForm) {
-    console.log('values', form.form.value);
     this.recipeService.addNewRecipe(form.form.value);
   }
 }

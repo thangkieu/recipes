@@ -18,8 +18,11 @@ import {
 } from '@angular/fire/analytics';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideStorage, getStorage } from '@angular/fire/storage';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+// import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat';
+import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/compat/auth';
+// import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -29,13 +32,23 @@ import { AngularFireModule } from '@angular/fire/compat';
     FormsModule,
     AuthModule,
     AppRoutingModule,
+
+    AngularFireModule.initializeApp(environment.firebase),
+
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    // AngularFireModule.initializeApp(environment.firebase),
+    provideFirestore(() => getFirestore()),
     provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),
-    provideStorage(() => getStorage()),
+    // provideStorage(() => getStorage()),
   ],
-  providers: [ScreenTrackingService, UserTrackingService],
+  providers: [
+    ScreenTrackingService,
+    UserTrackingService,
+    {
+      provide: AUTH_SETTINGS,
+      useValue: { appVerificationDisabledForTesting: true },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

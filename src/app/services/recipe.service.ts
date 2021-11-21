@@ -1,10 +1,11 @@
 import { EventEmitter, Injectable, OnInit } from '@angular/core';
 import { Recipe } from '../components/recipes/recipe.model';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
+import { getDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +22,8 @@ export class RecipeService implements OnInit {
 
     const doc = this.recipeCollection.doc();
 
-    this.recipes = this.recipeCollection.valueChanges();
-    this.recipeCollection.get().subscribe((value) => {
-      console.log('value', value);
+    this.recipes = this.recipeCollection.valueChanges({
+      idField: 'id',
     });
   }
 
@@ -36,13 +36,19 @@ export class RecipeService implements OnInit {
   }
 
   setActiveRecipe(recipe: Recipe) {
-    console.log('set active service');
     this.activeRecipe = recipe;
 
     this.activeRecipeChanged.emit();
   }
 
   removeRecipe(recipeId: string) {
-    this.recipeCollection.doc(recipeId).delete();
+    return this.recipeCollection.doc(recipeId).delete();
+  }
+
+  getRecipe(id: string) {
+    return this.recipeCollection
+      .doc(id)
+      .get()
+      .pipe(map((item) => item.data() as Recipe));
   }
 }

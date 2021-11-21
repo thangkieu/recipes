@@ -1,4 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  Router,
+} from '@angular/router';
 import { map, Subscription } from 'rxjs';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Recipe } from '../recipe.model';
@@ -11,27 +16,30 @@ import { Recipe } from '../recipe.model';
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   data!: Recipe;
   subscription!: Subscription;
-
-  constructor(private recipeService: RecipeService) {}
+  recipeId: string;
+  constructor(
+    private router: Router,
+    private recipeService: RecipeService,
+    private activeRoute: ActivatedRoute
+  ) {
+    this.recipeId = activeRoute.snapshot.paramMap.get('id') || '';
+  }
 
   ngOnInit(): void {
-    this.data = this.recipeService.activeRecipe;
-    this.subscription = this.recipeService.activeRecipeChanged
-      .pipe(map((a) => console.log('pipe', a)))
-      .subscribe(this.onActiveRecipeChanged);
+    this.subscription = this.activeRoute.data.subscribe((data) => {
+      this.data = data['data'];
+    });
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  onActiveRecipeChanged = () => {
-    this.data = this.recipeService.activeRecipe;
-  };
-
   remove(e: Event) {
     e.preventDefault();
-    console.log(this.data);
-    this.recipeService.removeRecipe(this.data.id);
+
+    this.recipeService.removeRecipe(this.recipeId).then(() => {
+      this.router.navigate(['/recipes']);
+    });
   }
 }
