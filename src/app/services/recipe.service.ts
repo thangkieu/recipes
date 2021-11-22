@@ -30,9 +30,11 @@ export class RecipeService implements OnInit {
   ngOnInit() {}
 
   addNewRecipe(recipe: Recipe) {
-    const id = this.firestore.createId();
+    this.recipeCollection.add(recipe);
+  }
 
-    this.recipeCollection.add({ ...recipe, id });
+  update(docId: string, recipe: Recipe) {
+    return this.recipeCollection.doc(docId).update(recipe);
   }
 
   setActiveRecipe(recipe: Recipe) {

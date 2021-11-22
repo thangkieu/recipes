@@ -11,11 +11,12 @@
         <span class="me-auto">{{ data.name }}</span>
         <a
           class="btn btn-outline-danger btn-sm me-2 flex-shrink-0"
-          href="#"
           (click)="remove($event)"
           >Delete Recepie</a
         >
-        <a class="btn btn-outline-secondary btn-sm flex-shrink-0" href="#"
+        <a
+          class="btn btn-outline-secondary btn-sm flex-shrink-0"
+          routerLink="/recipes/{{ recipeId }}/edit"
           >Edit Recipe</a
         >
       </h1>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -7,6 +7,8 @@ import {
   NgForm,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Recipe } from '../recipe.model';
 
@@ -15,25 +17,60 @@ import { Recipe } from '../recipe.model';
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.scss'],
 })
-export class RecipeEditComponent implements OnInit {
-  constructor(private recipeService: RecipeService) {}
+export class RecipeEditComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   recipe = new Recipe('', '', '', '', [], '');
   fb = new FormBuilder();
+  recipeId: string;
 
+  subscription!: Subscription;
   // ingredients: { name: string; amount: string }[] = [];
+  constructor(
+    private recipeService: RecipeService,
+    private activeRoute: ActivatedRoute
+  ) {
+    this.recipeId = this.activeRoute.snapshot.paramMap.get('id') || '';
+  }
 
   ngOnInit(): void {
+    this.subscription = this.activeRoute.data.subscribe(
+      (recipeDetails: any) => {
+        if (recipeDetails.data) this.recipe = recipeDetails.data;
+
+        this.initForm();
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  initForm() {
     this.form = this.fb.group({
       name: [this.recipe.name, Validators.required],
       description: [this.recipe.description],
       directions: [this.recipe.directions, Validators.required],
       photoUrl: [this.recipe.photoUrl],
-      ingredients: this.fb.array([]),
+      ingredients: this.fb.array(
+        this.recipe.ingredients.map((ing) =>
+          this.fb.group({
+            name: [ing.name, Validators.required],
+            amount: [ing.amount, Validators.required],
+          })
+        )
+      ),
     });
   }
 
   submit() {
+    const id = this.activeRoute.snapshot.paramMap.get('id');
+    if (id) {
+      // update
+      this.recipeService.update(id, this.form.value);
+      return;
+    }
+
     this.recipeService.addNewRecipe(this.form.value);
   }
 
@@ -54,5 +91,10 @@ export class RecipeEditComponent implements OnInit {
     if (e.key === 'Enter') {
       this.addIngredient();
     }
+  }
+
+  remove(index: number) {
+    this.ingredients.removeAt(index);
+    this.recipe.ingredients.splice(index, 1);
   }
 }

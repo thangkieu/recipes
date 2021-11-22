@@ -10,10 +10,18 @@ const routes: Routes = [
   { path: 'add', component: RecipeEditComponent, pathMatch: 'add' },
   {
     path: ':id',
-    component: RecipeDetailComponent,
     resolve: { data: RecipeResolver },
+    children: [
+      {
+        path: '',
+        component: RecipeDetailComponent,
+      },
+      {
+        path: 'edit',
+        component: RecipeEditComponent,
+      },
+    ],
   },
-  { path: ':id/edit', component: RecipeEditComponent },
 ];
 
 @NgModule({
