@@ -1,4 +1,4 @@
-<header class="border-bottom">
+<header class="border-bottom shadow-sm">
   <nav class="navbar">
     <div class="container d-flex">
       <div class="navbar-header me-sm-auto">
@@ -59,7 +59,10 @@
             <span class="visually-hidden">Shopping list item</span>
           </span>
         </button>
-        <div *ngIf="isLoggedIn; else showLogin" class="dropdown text-end">
+        <div
+          *ngIf="isLoggedIn | async; else showLogin"
+          class="dropdown text-end"
+        >
           <a
             href="#"
             class="d-block link-dark text-decoration-none dropdown-toggle"
@@ -82,7 +85,10 @@
               />
             </svg>
           </a>
-          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+          <ul
+            class="dropdown-menu text-small shadow-lg"
+            aria-labelledby="dropdownUser1"
+          >
             <li>
               <a class="dropdown-item" (click)="logout($event)" href="#"
                 >Sign out</a

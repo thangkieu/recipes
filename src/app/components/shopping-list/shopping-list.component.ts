@@ -23,46 +23,57 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = this.fb.group({
       items: this.fb.array(
-        this.shoppingListService.listArr.map((item) => {
-          return this.fb.group({
-            name: [item.name],
-            amount: [item.amount],
-          });
-        })
+        this.shoppingListService.listArr.map((item) => this.fb.control(item))
       ),
     });
-
-    // this.ingredients = this.shoppingListService.listArr;
-
-    // this.subscription = this.shoppingListService.list$.subscribe((list) => {
-    //   this.ingredients = list;
-    // });
   }
 
   get items() {
     return this.form.get('items') as FormArray;
   }
+
   ngOnDestroy() {}
 
-  addIngredient() {
-    this.items.push(
-      this.fb.group({
-        name: [''],
-        amount: [''],
-      })
-    );
+  addIngredient(value: string = '') {
+    this.items.push(this.fb.control(value));
+    this.shoppingListService.add([value]);
   }
 
   submit() {}
 
-  onKeydown(e: KeyboardEvent) {
+  onKeydown(e: KeyboardEvent, idx: number) {
     if (e.key === 'Enter') {
+      e.preventDefault();
+
+      this.onBlur(idx);
       this.addIngredient();
     }
+  }
+
+  onBlur(idx: number) {
+    this.shoppingListService.update(idx, this.form.value.items[idx]);
   }
 
   remove(i: number) {
     this.shoppingListService.remove(i);
     this.items.removeAt(i);
+  }
+
+  onPaste(e: ClipboardEvent) {
+    e.preventDefault();
+
+    const data = e.clipboardData?.getData('text').trim().split('\n') || [];
+
+    const values = data.map((ing, idx) => {
+      const str = ing.trim().replace(/^-\s\[[\s|x]\]\s/g, '');
+
+      if (idx !== 0) {
+        this.addIngredient();
+      }
+
+      return str;
+    });
+
+    this.items.setValue(values);
   }
 }

@@ -1,10 +1,19 @@
 <div class="card">
-  <img
-    *ngIf="data.photoUrl"
-    src="{{ data.photoUrl }}"
-    class="card-img-top"
-    alt="{{ data.name }}"
-  />
+  <div
+    *ngIf="data.photoUrl; else noImage"
+    [ngStyle]="{
+      backgroundImage: 'url(\' ' + data.photoUrl + '\')'
+    }"
+    class="img-square"
+  ></div>
+  <ng-template #noImage>
+    <img
+      src="assets/image-placeholder.jpeg"
+      class="card-img-top"
+      alt="{{ data.name }}"
+    />
+  </ng-template>
+
   <div class="card-body">
     <h5 class="card-title">{{ data.name }}</h5>
     <p class="card-text text-truncate">{{ data.description }}</p>

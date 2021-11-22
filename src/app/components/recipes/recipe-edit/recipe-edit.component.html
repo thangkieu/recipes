@@ -54,26 +54,16 @@
         <ng-container
           *ngFor="let ingredientForm of ingredients.controls; let i = index"
         >
-          <div class="d-flex gap-2 mb-2" [formGroupName]="i">
+          <div class="d-flex gap-2 mb-2">
             <div class="flex-grow-1">
               <input
                 type="text"
                 class="form-control form-control-sm"
-                formControlName="name"
+                [formControlName]="i"
                 name="ingredientname"
-                placeholder="Name"
+                placeholder="Ingredient"
                 (keydown)="onIngredientKeydown($event)"
-              />
-              <div class="invalid-feedback">This field is mandatory</div>
-            </div>
-            <div>
-              <input
-                type="text"
-                class="form-control form-control-sm"
-                formControlName="amount"
-                name="ingredientamount"
-                placeholder="Amount"
-                (keydown)="onIngredientKeydown($event)"
+                (paste)="onPaste($event)"
               />
               <div class="invalid-feedback">This field is mandatory</div>
             </div>
@@ -115,7 +105,7 @@
         [disabled]="!form.valid"
         class="btn btn-primary btn-sm"
       >
-        Submit
+        {{ recipeId ? "Save" : "Submit" }}
       </button>
     </div>
   </form>

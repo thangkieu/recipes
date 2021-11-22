@@ -1,21 +1,24 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { Ingredient } from '../components/shared/ingredient.model';
-
 @Injectable({
   providedIn: 'root',
 })
 export class ShoppingListService implements OnInit {
-  listArr: Ingredient[] = [new Ingredient('Onion', '2 trái')];
-  list$: Subject<Ingredient[]> = new Subject();
+  listArr: string[] = [];
+  list$: Subject<string[]> = new Subject();
 
   constructor() {}
 
   ngOnInit() {}
 
-  add(ingredients: Ingredient[]) {
+  add(ingredients: string[]) {
     this.listArr.push(...ingredients);
+    this.list$.next(this.listArr);
+  }
+
+  update(index: number, value: string) {
+    this.listArr.splice(index, 1, value);
     this.list$.next(this.listArr);
   }
 

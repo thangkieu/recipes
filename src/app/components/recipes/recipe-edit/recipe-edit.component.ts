@@ -54,10 +54,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       photoUrl: [this.recipe.photoUrl],
       ingredients: this.fb.array(
         this.recipe.ingredients.map((ing) =>
-          this.fb.group({
-            name: [ing.name, Validators.required],
-            amount: [ing.amount, Validators.required],
-          })
+          this.fb.control(ing, Validators.required)
         )
       ),
     });
@@ -78,17 +75,14 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     return this.form.get('ingredients') as FormArray;
   }
 
-  addIngredient() {
-    const form = this.fb.group({
-      name: ['', Validators.required],
-      amount: ['', Validators.required],
-    });
-
-    this.ingredients.push(form);
+  addIngredient(value: string = '') {
+    this.ingredients.push(this.fb.control(value, Validators.required));
   }
 
   onIngredientKeydown(e: KeyboardEvent) {
     if (e.key === 'Enter') {
+      e.preventDefault();
+
       this.addIngredient();
     }
   }
@@ -96,5 +90,23 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   remove(index: number) {
     this.ingredients.removeAt(index);
     this.recipe.ingredients.splice(index, 1);
+  }
+
+  onPaste(e: ClipboardEvent) {
+    e.preventDefault();
+
+    const data = e.clipboardData?.getData('text').trim().split('\n') || [];
+
+    const values = data.map((ing, idx) => {
+      const str = ing.trim().replace(/^-\s\[[\s|x]\]\s/g, '');
+
+      if (idx !== 0) {
+        this.addIngredient();
+      }
+
+      return str;
+    });
+
+    this.ingredients.setValue(values);
   }
 }

@@ -2,10 +2,12 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { UserInfo } from '@angular/fire/auth';
+import { Observable, Subscription } from 'rxjs';
 import { ShoppingListService } from 'src/app/services/shopping-list.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -14,10 +16,11 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('headerEl', { static: true }) headerEl!: ElementRef;
-  isLoggedIn: boolean = false;
+  isLoggedIn!: Observable<boolean>;
   shoppingListNo: number = 0;
+  subscription!: Subscription;
 
   constructor(
     private userService: UserService,
@@ -25,15 +28,15 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userService.isAuthenticated().subscribe({
-      next: (loggedIn: boolean) => {
-        this.isLoggedIn = loggedIn;
-      },
-    });
+    this.isLoggedIn = this.userService.isAuthenticated();
 
-    this.shoppingListService.list$.subscribe((item) => {
+    this.subscription = this.shoppingListService.list$.subscribe((item) => {
       this.shoppingListNo = item.length;
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   logout(e: Event) {

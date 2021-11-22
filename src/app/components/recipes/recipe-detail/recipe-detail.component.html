@@ -1,45 +1,58 @@
-<div class="container mt-3">
-  <div *ngIf="data; else noData" class="row">
-    <div class="col">
-      <img
-        *ngIf="data.photoUrl"
-        class="float-left"
-        src="{{ data.photoUrl }}"
-        alt="{{ data.name }}"
-      />
-      <h1 class="d-flex align-items-end">
-        <span class="me-auto">{{ data.name }}</span>
-        <a
-          class="btn btn-outline-danger btn-sm me-2 flex-shrink-0"
-          (click)="remove($event)"
-          >Delete Recepie</a
-        >
-        <a
-          class="btn btn-outline-secondary btn-sm flex-shrink-0"
-          routerLink="/recipes/{{ recipeId }}/edit"
-          >Edit Recipe</a
-        >
-      </h1>
+<div class="container mt-3 mb-3">
+  <ng-container *ngIf="data; else noData">
+    <div class="d-flex mb-3 align-items-start gap-3">
+      <div>
+        <img
+          *ngIf="data.photoUrl"
+          class=""
+          src="{{ data.photoUrl }}"
+          alt="{{ data.name }}"
+          class="img-responsive"
+        />
+      </div>
 
-      <hr />
-      <h4>Description</h4>
-      <div class="pre-text">{{ data.description }}</div>
-      <hr />
-      <h4>Ingredients</h4>
+      <div class="flex-grow-1">
+        <h1 class="d-flex align-items-end">
+          <span class="me-auto">{{ data.name }}</span>
 
-      <ul>
-        <li *ngFor="let ing of data.ingredients">
-          {{ ing.name }}: <strong>{{ ing.amount }}</strong>
-        </li>
-      </ul>
-      <button class="btn btn-outline-primary btn-sm" (click)="addIngredients()">
-        + Add to Shopping List
-      </button>
-      <hr />
-      <h4>Directions</h4>
-      <div class="pre-text">{{ data.directions }}</div>
+          <a
+            class="btn btn-outline-danger btn-sm me-2 flex-shrink-0 btn-action"
+            (click)="remove($event)"
+            >Delete Recepie</a
+          >
+          <a
+            class="btn btn-outline-secondary btn-sm flex-shrink-0 btn-action"
+            routerLink="/recipes/{{ recipeId }}/edit"
+            >Edit Recipe</a
+          >
+        </h1>
+        <div class="pre-text">{{ data.description }}</div>
+      </div>
     </div>
-  </div>
+
+    <hr />
+    <h4 class="mb-3">Ingredients</h4>
+
+    <ng-container *ngFor="let ing of data.ingredients; let i = index">
+      <div class="mb-3 form-check">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="checkbox-{{ i }}-{{ ing }}"
+        />
+        <label class="form-check-label" for="checkbox-{{ i }}-{{ ing }}">{{
+          ing
+        }}</label>
+      </div>
+    </ng-container>
+
+    <button class="btn btn-outline-primary btn-sm" (click)="addIngredients()">
+      + Add all to Shopping List
+    </button>
+    <hr />
+    <h4 class="mb-3">Directions</h4>
+    <div class="pre-text">{{ data.directions }}</div>
+  </ng-container>
 
   <ng-template #noData>
     <div class="text-center mt-5">
