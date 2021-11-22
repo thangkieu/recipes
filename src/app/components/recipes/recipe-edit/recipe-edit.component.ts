@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Recipe } from '../recipe.model';
 
@@ -22,14 +22,17 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   recipe = new Recipe('', '', '', '', [], '');
   fb = new FormBuilder();
   recipeId: string;
-
   subscription!: Subscription;
+
+  doing: Subject<boolean> = new Subject<boolean>();
+
   // ingredients: { name: string; amount: string }[] = [];
   constructor(
     private recipeService: RecipeService,
     private activeRoute: ActivatedRoute
   ) {
     this.recipeId = this.activeRoute.snapshot.paramMap.get('id') || '';
+    this.doing.next(false);
   }
 
   ngOnInit(): void {
@@ -61,14 +64,23 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    this.doing.next(true);
+
     const id = this.activeRoute.snapshot.paramMap.get('id');
     if (id) {
       // update
-      this.recipeService.update(id, this.form.value);
+      this.recipeService
+        .update(id, this.form.value)
+        .then(() => void this.doing.next(false))
+        .catch(() => void this.doing.next(false));
+
       return;
     }
 
-    this.recipeService.addNewRecipe(this.form.value);
+    this.recipeService
+      .addNewRecipe(this.form.value)
+      .then(() => void this.doing.next(false))
+      .catch(() => void this.doing.next(false));
   }
 
   get ingredients() {

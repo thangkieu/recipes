@@ -1,9 +1,8 @@
-<div class="container mt-3 mb-3">
+<div class="container mt-3 mb-3 background">
   <ng-container *ngIf="data; else noData">
     <div class="d-flex mb-3 align-items-start gap-3">
-      <div>
+      <div *ngIf="data.photoUrl">
         <img
-          *ngIf="data.photoUrl"
           class=""
           src="{{ data.photoUrl }}"
           alt="{{ data.name }}"

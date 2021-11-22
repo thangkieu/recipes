@@ -23,9 +23,10 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/compat/auth';
 // import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent],
   imports: [
     BrowserModule,
     CommonModule,

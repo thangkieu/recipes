@@ -68,7 +68,11 @@
               <div class="invalid-feedback">This field is mandatory</div>
             </div>
             <div>
-              <button class="btn btn-outline-danger btn-sm" (click)="remove(i)">
+              <button
+                [disabled]="doing | async"
+                class="btn btn-outline-danger btn-sm"
+                (click)="remove(i)"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -101,11 +105,25 @@
     </div>
     <div class="mb-3 text-end">
       <button
+        routerLink="/recipes/{{ recipeId }}"
+        class="btn btn-default btn-sm"
+      >
+        Back
+      </button>
+      <button
         type="submit"
-        [disabled]="!form.valid"
+        [disabled]="!form.valid || (doing | async)"
         class="btn btn-primary btn-sm"
       >
-        {{ recipeId ? "Save" : "Submit" }}
+        {{
+          recipeId
+            ? (doing | async)
+              ? "Saving..."
+              : "Save"
+            : (doing | async)
+            ? "Submitting..."
+            : "Submit"
+        }}
       </button>
     </div>
   </form>

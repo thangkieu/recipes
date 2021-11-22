@@ -30,7 +30,7 @@ export class RecipeService implements OnInit {
   ngOnInit() {}
 
   addNewRecipe(recipe: Recipe) {
-    this.recipeCollection.add(recipe);
+    return this.recipeCollection.add(recipe);
   }
 
   update(docId: string, recipe: Recipe) {
