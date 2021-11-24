@@ -11,14 +11,9 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'recipes',
+    path: '',
     loadChildren: () =>
       import('./components/recipes/recipes.module').then((s) => s.RecipeModule),
-  },
-  {
-    path: '',
-    redirectTo: 'recipes',
-    pathMatch: 'full',
   },
 ];
 

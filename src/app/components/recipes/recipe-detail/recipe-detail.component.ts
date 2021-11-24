@@ -44,7 +44,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     e.preventDefault();
 
     this.recipeService.removeRecipe(this.recipeId).then(() => {
-      this.router.navigate(['/recipes']);
+      this.router.navigate(['/']);
     });
   }
 

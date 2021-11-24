@@ -8,9 +8,9 @@ import { RecipesComponent } from './recipes.component';
 
 const routes: Routes = [
   { path: '', component: RecipesComponent },
-  { path: 'add', component: RecipeEditComponent, pathMatch: 'add' },
+  { path: 'recipes/add', component: RecipeEditComponent, pathMatch: 'add' },
   {
-    path: ':id',
+    path: 'recipes/:id',
     resolve: { data: RecipeResolver },
     children: [
       {
