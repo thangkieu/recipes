@@ -10,7 +10,7 @@ import { LoadingService } from './loading.service';
 import { RecipeService } from './recipe.service';
 
 @Injectable({ providedIn: 'root' })
-export class RecipeResolver implements Resolve<Recipe> {
+export class RecipesResolver implements Resolve<Recipe[]> {
   constructor(
     private service: RecipeService,
     private loadingService: LoadingService
@@ -18,12 +18,10 @@ export class RecipeResolver implements Resolve<Recipe> {
 
   resolve(
     route: ActivatedRouteSnapshot
-  ): Observable<Recipe> | Promise<Recipe> | Recipe {
+  ): Observable<Recipe[]> | Promise<Recipe[]> | Recipe[] {
     const id = route.paramMap.get('id');
     this.loadingService.toggle(true);
 
-    if (id) return this.service.getRecipe(id);
-
-    return Promise.reject();
+    return this.service.getRecipes();
   }
 }

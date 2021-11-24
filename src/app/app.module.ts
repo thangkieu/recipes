@@ -24,9 +24,15 @@ import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/compat/auth';
 // import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FooterComponent } from './components/footer/footer.component';
+import { LoadingComponent } from './components/loading.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    LoadingComponent,
+  ],
   imports: [
     BrowserModule,
     CommonModule,

@@ -59,13 +59,9 @@
             <span class="visually-hidden">Shopping list item</span>
           </span>
         </button>
-        <div
-          *ngIf="isLoggedIn | async; else showLogin"
-          class="dropdown text-end"
-        >
-          <a
-            href="#"
-            class="d-block link-dark text-decoration-none dropdown-toggle"
+        <div *ngIf="isLoggedIn | async" class="dropdown text-end">
+          <button
+            class="btn d-block link-dark text-decoration-none dropdown-toggle"
             id="dropdownUser1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
@@ -84,7 +80,7 @@
                 d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
               />
             </svg>
-          </a>
+          </button>
           <ul
             class="dropdown-menu text-small shadow-lg"
             aria-labelledby="dropdownUser1"
@@ -96,9 +92,12 @@
             </li>
           </ul>
         </div>
-        <ng-template #showLogin>
-          <a routerLink="/login" class="btn btn-primary btn-sm">Login</a>
-        </ng-template>
+        <a
+          *ngIf="showLoginBtn && !(isLoggedIn | async)"
+          routerLink="/login"
+          class="btn btn-primary btn-sm"
+          >Login</a
+        >
       </div>
     </div>
   </nav>

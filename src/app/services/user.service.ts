@@ -23,25 +23,11 @@ export class UserService {
   }
 
   login(email: string, password: string) {
-    this.authService.login(email, password).subscribe({
-      next: () => {
-        this.router.navigate(['/']);
-      },
-      error: (err) => {
-        console.log('login error::', err);
-      },
-    });
+    return this.authService.login(email, password);
   }
 
   signup(email: string, password: string) {
-    this.authService.signup(email, password).subscribe({
-      next: () => {
-        this.router.navigate(['/login']);
-      },
-      error: (error) => {
-        console.log('signup error::', error);
-      },
-    });
+    return this.authService.signup(email, password);
   }
 
   logout() {

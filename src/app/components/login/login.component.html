@@ -1,28 +1,59 @@
 <div class="container">
-  <h1 class="mb-3">Login</h1>
-  <form (ngSubmit)="login(f)" #f="ngForm">
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input
-        type="email"
-        class="form-control"
-        id="exampleInputEmail1"
-        aria-describedby="emailHelp"
-        ngModel=""
-        name="email"
-      />
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input
-        type="password"
-        class="form-control"
-        id="exampleInputPassword1"
-        ngModel=""
-        name="password"
-      />
-    </div>
+  <div class="row justify-content-center">
+    <div class="col col-md-8 col-lg-6">
+      <div class="card shadow-lg rounded-3 p-5 mt-5">
+        <div class="card-body">
+          <h1 class="mb-3">Login</h1>
 
-    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-  </form>
+          <form (ngSubmit)="login(f)" #f="ngForm" class="">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >Email address</label
+              >
+              <input
+                type="email"
+                class="form-control form-control-sm"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                ngModel=""
+                name="email"
+                placeholder="example@example.com"
+                required
+              />
+              <div class="invalid-feedback">This field is mandatory</div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label"
+                >Password</label
+              >
+              <input
+                type="password"
+                class="form-control form-control-sm"
+                id="exampleInputPassword1"
+                ngModel=""
+                name="password"
+                required
+              />
+              <div class="invalid-feedback">This field is mandatory</div>
+            </div>
+
+            <p class="d-block invalid-feedback">{{ errorMessage | async }}</p>
+
+            <div class="text-end">
+              <span>Doesn't have account yet?</span>
+              <span>&nbsp;</span>
+              <a routerLink="/signup">Signup</a>
+              <button
+                [disabled]="!f.valid || (loading | async)"
+                type="submit"
+                class="btn btn-primary btn-sm ms-3"
+              >
+                {{ (loading | async) ? "Logging in" : "Login" }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

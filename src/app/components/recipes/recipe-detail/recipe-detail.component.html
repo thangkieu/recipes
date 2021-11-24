@@ -1,6 +1,9 @@
 <div class="container mt-3 mb-3 background">
+  <button routerLink="/recipes" class="btn btn-link ps-0 text-decoration-none">
+    &#8592; Back
+  </button>
   <ng-container *ngIf="data; else noData">
-    <div class="d-flex mb-3 align-items-start gap-3">
+    <div class="d-sm-flex mb-3 align-items-start gap-3">
       <div *ngIf="data.photoUrl">
         <img
           class=""
@@ -10,19 +13,26 @@
         />
       </div>
 
-      <div class="flex-grow-1">
+      <div class="mt-3 mt-sm-0 flex-grow-1">
         <h1 class="d-flex align-items-end">
           <span class="me-auto">{{ data.name }}</span>
 
-          <a
-            class="btn btn-outline-danger btn-sm me-2 flex-shrink-0 btn-action"
-            (click)="remove($event)"
-            >Delete Recepie</a
-          >
-          <a
-            class="btn btn-outline-secondary btn-sm flex-shrink-0 btn-action"
-            routerLink="/recipes/{{ recipeId }}/edit"
-            >Edit Recipe</a
+          <ng-container *ngIf="userService.isAuthenticated() | async">
+            <a
+              class="
+                btn btn-outline-danger btn-sm
+                me-2
+                flex-shrink-0
+                btn-action
+              "
+              (click)="remove($event)"
+              >Delete Recepie</a
+            >
+            <a
+              class="btn btn-outline-secondary btn-sm flex-shrink-0 btn-action"
+              routerLink="/recipes/{{ recipeId }}/edit"
+              >Edit Recipe</a
+            ></ng-container
           >
         </h1>
         <div class="pre-text">{{ data.description }}</div>

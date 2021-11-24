@@ -1,29 +1,55 @@
 <div class="container">
-  <h1 class="mb-3">Signup</h1>
-  <form (ngSubmit)="signup(f)" #f="ngForm">
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input
-        type="email"
-        class="form-control"
-        id="exampleInputEmail1"
-        aria-describedby="emailHelp"
-        ngModel=""
-        name="email"
-      />
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input
-        type="password"
-        class="form-control"
-        id="exampleInputPassword1"
-        ngModel=""
-        name="password"
-      />
-    </div>
+  <div class="row justify-content-center">
+    <div class="col col-md-8 col-lg-6">
+      <div class="card shadow-lg rounded-3 p-5 mt-5">
+        <div class="card-body">
+          <h1 class="mb-3">Signup</h1>
+          <form (ngSubmit)="signup(f)" #f="ngForm">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >Email address</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                ngModel=""
+                name="email"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label"
+                >Password</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputPassword1"
+                ngModel=""
+                name="password"
+                required
+              />
+            </div>
 
-    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-    <a routerLink="/login">Already have an account? Login here</a>
-  </form>
+            <p class="d-block invalid-feedback">{{ errorMessage | async }}</p>
+
+            <div class="text-end">
+              <span>Already have an account?</span>
+              <span>&nbsp;</span>
+              <a routerLink="/login">Login</a>
+              <button
+                [disabled]="!f.valid || (loading | async)"
+                type="submit"
+                class="btn btn-primary btn-sm ms-3"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable, OnInit } from '@angular/core';
 import { Recipe } from '../components/recipes/recipe.model';
-import { map, Observable } from 'rxjs';
+import { concat, map, Observable } from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
@@ -13,21 +13,22 @@ import { getDoc } from '@angular/fire/firestore';
 export class RecipeService implements OnInit {
   activeRecipe!: Recipe;
   recipeCollection!: AngularFirestoreCollection<Recipe>;
-  recipes!: Observable<Recipe[]>;
+  // recipes!: Observable<Recipe[]>;
 
   activeRecipeChanged = new EventEmitter();
 
   constructor(private firestore: AngularFirestore) {
     this.recipeCollection = this.firestore.collection<Recipe>('recipes');
-
-    const doc = this.recipeCollection.doc();
-
-    this.recipes = this.recipeCollection.valueChanges({
-      idField: 'id',
-    });
   }
 
   ngOnInit() {}
+
+  getRecipes(): Observable<Recipe[]> {
+    return this.recipeCollection
+      .get()
+      .pipe(map((item) => item.docs))
+      .pipe(map((item) => item.map((i) => ({ ...i.data(), id: i.id }))));
+  }
 
   addNewRecipe(recipe: Recipe) {
     return this.recipeCollection.add(recipe);
