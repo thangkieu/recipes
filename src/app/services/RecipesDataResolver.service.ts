@@ -9,7 +9,7 @@ import { Recipe } from '../components/recipes/recipe.model';
 import { LoadingService } from './loading.service';
 import { RecipeService } from './recipe.service';
 
-@Injectable({ providedIn: 'root' })
+// @Injectable({ providedIn: 'root' })
 export class RecipesResolver implements Resolve<Recipe[]> {
   constructor(
     private service: RecipeService,

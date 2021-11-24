@@ -17,8 +17,6 @@
   <div class="card-body">
     <h5 class="card-title">{{ data.name }}</h5>
     <p class="card-text text-truncate">{{ data.description }}</p>
-    <a class="stretched-link" routerLink="/recipes/{{ data.id }}"
-      >View details</a
-    >
+    <a class="stretched-link" routerLink="/{{ data.id }}">View details</a>
   </div>
 </div>

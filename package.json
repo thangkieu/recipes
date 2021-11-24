@@ -1,5 +1,5 @@
 {
-  "name": "udemy-recipe",
+  "name": "recipes",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

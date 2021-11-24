@@ -17,7 +17,7 @@
         <h1 class="d-flex align-items-end">
           <span class="me-auto">{{ data.name }}</span>
 
-          <ng-container *ngIf="userService.isAuthenticated() | async">
+          <ng-container *ngIf="isLoggedIn | async">
             <a
               class="
                 btn btn-outline-danger btn-sm
@@ -30,7 +30,7 @@
             >
             <a
               class="btn btn-outline-secondary btn-sm flex-shrink-0 btn-action"
-              routerLink="/recipes/{{ recipeId }}/edit"
+              routerLink="/{{ recipeId }}/edit"
               >Edit Recipe</a
             ></ng-container
           >

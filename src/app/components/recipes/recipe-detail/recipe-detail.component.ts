@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { ShoppingListService } from 'src/app/services/shopping-list.service';
@@ -16,6 +16,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   data!: Recipe;
   subscription!: Subscription;
   recipeId: string;
+  isLoggedIn!: Observable<boolean>;
 
   constructor(
     private router: Router,
@@ -29,6 +30,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isLoggedIn = this.userService.isAuthenticated();
+
     this.subscription = this.activeRoute.data.subscribe((data) => {
       this.data = data['data'];
 

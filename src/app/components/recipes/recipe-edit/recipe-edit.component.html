@@ -1,5 +1,5 @@
 <div class="container mt-3">
-  <h2 class="mb-3">{{ recipeId ? "Update" : "Add" }} Recipe</h2>
+  <h2 class="mb-3">{{ recipeId ? 'Update' : 'Add' }} Recipe</h2>
   <form (ngSubmit)="submit()" [formGroup]="form">
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
@@ -105,7 +105,8 @@
     </div>
     <div class="mb-3 text-end">
       <button
-        routerLink="/recipes/{{ recipeId }}"
+        type="button"
+        routerLink="/{{ recipeId }}"
         class="btn btn-default btn-sm"
       >
         Back
@@ -118,11 +119,11 @@
         {{
           recipeId
             ? (doing | async)
-              ? "Saving..."
-              : "Save"
+              ? 'Saving...'
+              : 'Save'
             : (doing | async)
-            ? "Submitting..."
-            : "Submit"
+            ? 'Submitting...'
+            : 'Submit'
         }}
       </button>
     </div>
