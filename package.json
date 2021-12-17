@@ -1,10 +1,11 @@
 {
   "name": "recipes",
   "version": "0.0.0",
+  "homepage": "/recipes",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --aot",
+    "build": "ng build --deploy-url /recipes/ --aot",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
