@@ -1,7 +1,6 @@
 {
   "name": "recipes",
   "version": "0.0.0",
-  "homepage": "/recipes",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
