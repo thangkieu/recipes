@@ -1,12 +1,26 @@
+import { Observable } from 'rxjs';
+
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable } from 'rxjs';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from '@angular/fire/compat/firestore';
+
+import { User } from '../components/shared/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthServices {
-  constructor(private firebaseAuth: AngularFireAuth) {}
+  userCollection!: AngularFirestoreCollection<User>;
+
+  constructor(
+    private firebaseAuth: AngularFireAuth,
+    private firestore: AngularFirestore
+  ) {
+    this.userCollection = this.firestore.collection<User>('users');
+  }
 
   isAuthenticated() {
     return new Observable<boolean>((subscriber) => {

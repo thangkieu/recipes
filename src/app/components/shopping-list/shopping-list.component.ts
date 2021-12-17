@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ShoppingListService } from 'src/app/services/shopping-list.service';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+
 import { Ingredient } from '../shared/ingredient.model';
 
 @Component({

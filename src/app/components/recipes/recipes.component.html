@@ -1,7 +1,7 @@
 <div class="container pt-3">
   <div *ngIf="isLoggedIn | async" class="text-end">
     <button routerLink="/add" class="btn btn-primary mb-3 btn-sm">
-      + New Recipe
+      <span class="ti-plus"></span> New Recipe
     </button>
   </div>
   <app-recipe-list></app-recipe-list>

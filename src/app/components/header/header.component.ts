@@ -1,16 +1,15 @@
+import { Observable, Subscription } from 'rxjs';
+import { ShoppingListService } from 'src/app/services/shopping-list.service';
+import { UserService } from 'src/app/services/user.service';
+
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
-import { UserInfo } from '@angular/fire/auth';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { ShoppingListService } from 'src/app/services/shopping-list.service';
-import { UserService } from 'src/app/services/user.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',

@@ -1,15 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  NgForm,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { LoadingService } from 'src/app/services/loading.service';
 import { RecipeService } from 'src/app/services/recipe.service';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { Recipe } from '../recipe.model';
 
 @Component({
@@ -22,14 +18,18 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   recipe = new Recipe('', '', '', '', [], '');
   fb = new FormBuilder();
   recipeId: string;
+
   subscription!: Subscription;
+  authSubscription!: Subscription;
 
   doing: Subject<boolean> = new Subject<boolean>();
 
   // ingredients: { name: string; amount: string }[] = [];
   constructor(
     private recipeService: RecipeService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private loadingService: LoadingService,
+    private routeService: Router
   ) {
     this.recipeId = this.activeRoute.snapshot.paramMap.get('id') || '';
     this.doing.next(false);
@@ -41,8 +41,12 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         if (recipeDetails.data) this.recipe = recipeDetails.data;
 
         this.initForm();
+
+        this.loadingService.toggle(false);
       }
     );
+
+    // TODO: add user to recipe
   }
 
   ngOnDestroy() {
@@ -71,17 +75,24 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       // update
       this.recipeService
         .update(id, this.form.value)
-        .then(() => void this.doing.next(false))
-        .catch(() => void this.doing.next(false));
-
+        .then(this.done)
+        .catch(this.done);
       return;
     }
-
     this.recipeService
       .addNewRecipe(this.form.value)
-      .then(() => void this.doing.next(false))
-      .catch(() => void this.doing.next(false));
+      .then(this.done)
+      .catch(this.done);
+    this.recipeService.httpAddNewRecipes(this.form.value).subscribe({
+      next: this.done,
+      error: this.done,
+    });
   }
+
+  done = () => {
+    this.doing.next(false);
+    this.routeService.navigate([`/${this.recipeId}`]);
+  };
 
   get ingredients() {
     return this.form.get('ingredients') as FormArray;

@@ -1,6 +1,8 @@
+import { RecipeResolver } from 'src/app/services/RecipeDataResolve.service';
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RecipeResolver } from 'src/app/services/RecipeDataResolve.service';
+
 // import { RecipesResolver } from 'src/app/services/RecipesDataResolver.service';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
@@ -11,6 +13,7 @@ const routes: Routes = [
   { path: 'add', component: RecipeEditComponent, pathMatch: 'add' },
   {
     path: ':id',
+    runGuardsAndResolvers: 'always',
     resolve: { data: RecipeResolver },
     children: [
       {

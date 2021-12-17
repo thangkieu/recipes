@@ -1,5 +1,9 @@
 .card {
   transition: all 0.3s ease;
+  height: 100%;
+  border: 0;
+  overflow: hidden;
+  box-shadow: 1px 1px 0 #ddd, -1px -1px 0 #ddd, 1px -1px 0 #ddd, -1px 1px 0 #ddd;
 
   &:hover {
     box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%);

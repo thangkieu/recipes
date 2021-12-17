@@ -1,8 +1,9 @@
+import { Subject } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
+
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { UserService } from 'src/app/services/user.service';
 
 type FormValue = {
   email: string;

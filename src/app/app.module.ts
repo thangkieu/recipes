@@ -1,30 +1,30 @@
-import { APP_INITIALIZER, InjectionToken, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
-import { HeaderComponent } from './components/header/header.component';
-import { AuthModule } from './components/auth/auth.module';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import {
-  provideAnalytics,
   getAnalytics,
+  provideAnalytics,
   ScreenTrackingService,
-  UserTrackingService,
+  UserTrackingService
 } from '@angular/fire/analytics';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideStorage, getStorage } from '@angular/fire/storage';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 // import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/compat/auth';
 // import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AuthModule } from './components/auth/auth.module';
 import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
 import { LoadingComponent } from './components/loading.component';
+import { MockServerInterceptor } from './services/mockserver-interceptor';
 
 @NgModule({
   declarations: [
@@ -35,13 +35,12 @@ import { LoadingComponent } from './components/loading.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     CommonModule,
     FormsModule,
     AuthModule,
     AppRoutingModule,
-
     AngularFireModule.initializeApp(environment.firebase),
-
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAnalytics(() => getAnalytics()),
@@ -54,6 +53,11 @@ import { LoadingComponent } from './components/loading.component';
     {
       provide: AUTH_SETTINGS,
       useValue: { appVerificationDisabledForTesting: true },
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MockServerInterceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

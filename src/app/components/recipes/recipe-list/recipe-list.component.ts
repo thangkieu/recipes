@@ -1,14 +1,10 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  OnDestroy,
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
 import { RecipeService } from 'src/app/services/recipe.service';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import { Recipe } from '../recipe.model';
 
 @Component({
@@ -28,11 +24,10 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // this.dataSub = this.activeRoute.data.subscribe((value) => {
-    //   this.recipes = value[0];
+    this.recipesService.httpGetRecipes().subscribe((value) => {
+      // console.log('data from http', value);
+    });
 
-    //   this.loadingService.toggle(false);
-    // });
     this.loadingService.toggle(true);
 
     this.dataSub = this.recipesService.getRecipes().subscribe((value) => {

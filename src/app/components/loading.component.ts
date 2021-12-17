@@ -1,4 +1,5 @@
-import { Component, Directive, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { LoadingService } from '../services/loading.service';
 
 @Component({

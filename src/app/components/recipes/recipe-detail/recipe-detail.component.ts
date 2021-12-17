@@ -1,10 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { ShoppingListService } from 'src/app/services/shopping-list.service';
 import { UserService } from 'src/app/services/user.service';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { Recipe } from '../recipe.model';
 
 @Component({
@@ -17,6 +19,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
   recipeId: string;
   isLoggedIn!: Observable<boolean>;
+
+  checkedItems!: string[];
 
   constructor(
     private router: Router,
@@ -36,6 +40,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       this.data = data['data'];
 
       this.loadingService.toggle(false);
+      this.checkedItems = this.data.ingredients;
     });
   }
 
@@ -52,6 +57,17 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   addIngredients() {
-    this.shoppingListService.add(this.data.ingredients);
+    this.shoppingListService.add(this.checkedItems);
+  }
+
+  onToggleIngredient(e: Event) {
+    const input = e.target as HTMLInputElement;
+    const { checked, value } = input;
+
+    if (checked) {
+      this.checkedItems.push(value);
+    } else {
+      this.checkedItems = this.checkedItems.filter((item) => item !== value);
+    }
   }
 }

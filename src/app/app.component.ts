@@ -1,12 +1,6 @@
-import { Route } from '@angular/compiler/src/core';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  Router,
-  UrlSegment,
-} from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+
+
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',

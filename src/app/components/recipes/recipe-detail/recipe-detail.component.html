@@ -1,72 +1,86 @@
-<div class="container mt-3 mb-3 background">
+<div class="container pt-3 pb-3 background">
   <button routerLink="/" class="btn btn-link ps-0 text-decoration-none">
-    &#8592; Back
+    <span class="ti-arrow-left"></span> Back
   </button>
-  <ng-container *ngIf="data; else noData">
-    <div class="d-sm-flex mb-3 align-items-start gap-3">
-      <div *ngIf="data.photoUrl">
-        <img
-          class=""
-          src="{{ data.photoUrl }}"
-          alt="{{ data.name }}"
-          class="img-responsive"
-        />
-      </div>
+  <div class="card rounded-0">
+    <ng-container *ngIf="data; else noData">
+      <div class="d-md-flex mb-3 align-items-start gap-3">
+        <div class="recipe-img" *ngIf="data.photoUrl">
+          <img
+            class=""
+            src="{{ data.photoUrl }}"
+            alt="{{ data.name }}"
+            class="img-responsive"
+          />
+        </div>
 
-      <div class="mt-3 mt-sm-0 flex-grow-1">
-        <h1 class="d-flex align-items-end">
-          <span class="me-auto">{{ data.name }}</span>
+        <div class="mt-3 mt-md-0 flex-grow-1">
+          <h1 class="d-flex align-items-end">
+            <span class="me-auto">{{ data.name }}</span>
 
-          <ng-container *ngIf="isLoggedIn | async">
-            <a
-              class="
-                btn btn-outline-danger btn-sm
-                me-2
-                flex-shrink-0
-                btn-action
-              "
-              (click)="remove($event)"
-              >Delete Recepie</a
+            <ng-container *ngIf="isLoggedIn | async">
+              <a
+                class="
+                  btn btn-outline-danger btn-sm
+                  me-2
+                  flex-shrink-0
+                  btn-action
+                "
+                (click)="remove($event)"
+                ><span class="ti-trash"></span> Delete Recepie</a
+              >
+              <a
+                class="
+                  btn btn-outline-secondary btn-sm
+                  flex-shrink-0
+                  btn-action
+                "
+                routerLink="/{{ recipeId }}/edit"
+                ><span class="ti-pencil"></span> Edit Recipe</a
+              ></ng-container
             >
-            <a
-              class="btn btn-outline-secondary btn-sm flex-shrink-0 btn-action"
-              routerLink="/{{ recipeId }}/edit"
-              >Edit Recipe</a
-            ></ng-container
+          </h1>
+          <div class="pre-text">{{ data.description }}</div>
+
+          <hr />
+          <h4 class="mb-3">Ingredients</h4>
+
+          <ng-container *ngFor="let ing of data.ingredients; let i = index">
+            <div class="mb-2 form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [value]="ing"
+                (change)="onToggleIngredient($event)"
+                [checked]="this.checkedItems.includes(ing)"
+                id="checkbox-{{ i }}-{{ ing }}"
+              />
+              <label
+                class="form-check-label"
+                for="checkbox-{{ i }}-{{ ing }}"
+                >{{ ing }}</label
+              >
+            </div>
+          </ng-container>
+          <button
+            class="btn btn-outline-primary btn-sm"
+            (click)="addIngredients()"
           >
-        </h1>
-        <div class="pre-text">{{ data.description }}</div>
+            <span class="ti-plus"></span> Add to Shopping List
+          </button>
+        </div>
       </div>
-    </div>
 
-    <hr />
-    <h4 class="mb-3">Ingredients</h4>
-
-    <ng-container *ngFor="let ing of data.ingredients; let i = index">
-      <div class="mb-3 form-check">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="checkbox-{{ i }}-{{ ing }}"
-        />
-        <label class="form-check-label" for="checkbox-{{ i }}-{{ ing }}">{{
-          ing
-        }}</label>
-      </div>
+      <hr />
+      <h4 class="mb-3">Directions</h4>
+      <div class="pre-text">{{ data.directions }}</div>
     </ng-container>
 
-    <button class="btn btn-outline-primary btn-sm" (click)="addIngredients()">
-      + Add all to Shopping List
-    </button>
-    <hr />
-    <h4 class="mb-3">Directions</h4>
-    <div class="pre-text">{{ data.directions }}</div>
-  </ng-container>
-
-  <ng-template #noData>
-    <div class="text-center mt-5">
-      <h2>Recipe not found.</h2>
-      <a routerLink="/recipes">Browser more recipes.</a>
-    </div>
-  </ng-template>
+    <ng-template #noData>
+      <div class="text-center mt-5">
+        <h2>Recipe not found.</h2>
+        <a routerLink="/recipes">Browser more recipes.</a>
+      </div>
+    </ng-template>
+  </div>
 </div>

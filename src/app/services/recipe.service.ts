@@ -1,11 +1,13 @@
+import { map, Observable } from 'rxjs';
+
+import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, OnInit } from '@angular/core';
-import { Recipe } from '../components/recipes/recipe.model';
-import { concat, map, Observable } from 'rxjs';
 import {
   AngularFirestore,
-  AngularFirestoreCollection,
+  AngularFirestoreCollection
 } from '@angular/fire/compat/firestore';
-import { getDoc } from '@angular/fire/firestore';
+
+import { Recipe } from '../components/recipes/recipe.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +19,7 @@ export class RecipeService implements OnInit {
 
   activeRecipeChanged = new EventEmitter();
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(private firestore: AngularFirestore, private http: HttpClient) {
     this.recipeCollection = this.firestore.collection<Recipe>('recipes');
   }
 
@@ -53,5 +55,13 @@ export class RecipeService implements OnInit {
       .doc(id)
       .get()
       .pipe(map((item) => item.data() as Recipe));
+  }
+  // http
+  httpGetRecipes() {
+    return this.http.get('/recipes');
+  }
+
+  httpAddNewRecipes(recipe: Recipe) {
+    return this.http.post('/recipes', recipe);
   }
 }
