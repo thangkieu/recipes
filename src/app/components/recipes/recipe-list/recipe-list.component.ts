@@ -24,10 +24,6 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.recipesService.httpGetRecipes().subscribe((value) => {
-      // console.log('data from http', value);
-    });
-
     this.loadingService.toggle(true);
 
     this.dataSub = this.recipesService.getRecipes().subscribe((value) => {

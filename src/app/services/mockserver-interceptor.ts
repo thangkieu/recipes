@@ -9,9 +9,7 @@ import { Injectable } from '@angular/core';
 export class MockServerInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     const req = request.clone({
-      url:
-        'https://my-json-server.typicode.com/thangkieu/mockjsonserver' +
-        request.url,
+      url: 'http://localhost:3000' + request.url,
     });
 
     return next.handle(req);

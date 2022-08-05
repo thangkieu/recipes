@@ -58,7 +58,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       name: [this.recipe.name, Validators.required],
       description: [this.recipe.description],
       directions: [this.recipe.directions, Validators.required],
-      photoUrl: [this.recipe.photoUrl],
+      photourl: [this.recipe.photourl],
       ingredients: this.fb.array(
         this.recipe.ingredients.map((ing) =>
           this.fb.control(ing, Validators.required)

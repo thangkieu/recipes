@@ -1,8 +1,8 @@
 <div class="card">
   <div
-    *ngIf="data.photoUrl; else noImage"
+    *ngIf="data.photourl; else noImage"
     [ngStyle]="{
-      backgroundImage: 'url(\' ' + data.photoUrl + '\')'
+      backgroundImage: 'url(\' ' + data.photourl + '\')'
     }"
     class="img-square"
   ></div>

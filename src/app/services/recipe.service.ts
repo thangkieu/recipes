@@ -26,10 +26,12 @@ export class RecipeService implements OnInit {
   ngOnInit() {}
 
   getRecipes(): Observable<Recipe[]> {
-    return this.recipeCollection
-      .get()
-      .pipe(map((item) => item.docs))
-      .pipe(map((item) => item.map((i) => ({ ...i.data(), id: i.id }))));
+    return this.httpGetRecipes();
+
+    // return this.recipeCollection
+    //   .get()
+    //   .pipe(map((item) => item.docs))
+    //   .pipe(map((item) => item.map((i) => ({ ...i.data(), id: i.id }))));
   }
 
   addNewRecipe(recipe: Recipe) {
@@ -58,7 +60,7 @@ export class RecipeService implements OnInit {
   }
   // http
   httpGetRecipes() {
-    return this.http.get('/recipes');
+    return this.http.get<Recipe[]>('/recipes');
   }
 
   httpAddNewRecipes(recipe: Recipe) {

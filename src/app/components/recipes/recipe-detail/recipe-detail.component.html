@@ -5,10 +5,10 @@
   <div class="card rounded-0">
     <ng-container *ngIf="data; else noData">
       <div class="d-md-flex mb-3 align-items-start gap-3">
-        <div class="recipe-img" *ngIf="data.photoUrl">
+        <div class="recipe-img" *ngIf="data.photourl">
           <img
             class=""
-            src="{{ data.photoUrl }}"
+            src="{{ data.photourl }}"
             alt="{{ data.name }}"
             class="img-responsive"
           />
